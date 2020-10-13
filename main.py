@@ -92,7 +92,7 @@ def add_data_to_combined(data):
         writer = csv.DictWriter(out_f, [*reader.fieldnames, new_field_name])
         writer.writeheader()
         for row in reader:
-            row[new_field_name] = str(values[row["msoa11cd"]])
+            row[new_field_name] = values[row["msoa11cd"]]
             writer.writerow(row)
 
     os.rename(filename + ".tmp", filename)
@@ -107,7 +107,10 @@ def save_data(date: datetime.date, data):
         writer.writeheader()
         for feature in data["features"]:
             writer.writerow(
-                {k: str(feature["attributes"][k]) for k in feature["attributes"]}
+                {
+                    k: str(v) if (v := feature["attributes"][k]) else ""
+                    for k in feature["attributes"]
+                }
             )
 
     add_data_to_combined(data)

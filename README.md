@@ -33,7 +33,7 @@ The same data as above as a CSV table.
 
 This file mirrors the form of the individual-date files, with a new column added for each new day's data.
 
-## data/geometries.json
+### data/geometries.json
 
 The geometry data pulled from the ArcGIS API. These are all rough polygons, and probably not in a standard format.
 It would be trivial to convert them to GeoJSON though, or for users of this data to match up the MSOA codes to

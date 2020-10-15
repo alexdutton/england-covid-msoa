@@ -1,7 +1,7 @@
 # MSOA-level COVID-19 case count time series data
 
 These data are weekly totals for new COVID-19 cases in England by MSOA ([Middle Level Super Output
-Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_Geography).
+Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_Geography)).
 
 ## Data files
 

@@ -7,10 +7,10 @@ Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_G
 
 The `data/` directory contains:
 
-### data/<date>.json
+### data/{date}.json
 
 These are pretty much verbatim files from the ArcGIS API published on the date in the file name, with
-geometries removed. There is a `wk<week>_<day>` field analogous to the [ISO week
+geometries removed. There is a `wk{week}_{day}` field analogous to the [ISO week
 date](https://en.wikipedia.org/wiki/ISO_week_date) format which contains the data for the 7 days up to and
 including the day in the field name. i.e. `wk41_3` covers the period from 1 October to 7 October.
 
@@ -18,7 +18,7 @@ Note that the publication date is currently about four days behind the data. Use
 
 These files are kept in order to reconstruct other data files if later required.
 
-### data/<date>.csv
+### data/{date}.csv
 
 The same data as above as a CSV table.
 

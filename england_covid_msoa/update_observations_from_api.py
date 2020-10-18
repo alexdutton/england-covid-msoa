@@ -57,6 +57,7 @@ else:
     ) as observations_new_f:
         reader = csv.DictReader(observations_f)
         writer = csv.DictWriter(observations_new_f, reader.fieldnames)
+        writer.writeheader()
 
         print(reader.fieldnames)
 

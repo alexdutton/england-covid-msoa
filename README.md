@@ -53,3 +53,12 @@ fetching new data is `main.py`.  Data updates generally happen late afternoon.
 I'm doing it manually so I can check that things are working properly each
 time, as I fully expect to have not anticipated some aspect of the data or API,
 or for the API to change from under me at some point.
+
+
+## If you run this API
+
+I couldn't see how to get batch data out of any API on
+api.coronavirus.data.gov.uk at the MSOA level, so I've resorted to making a
+request for every single MSOA, with a 0.2s hard-coded interval between
+requests. If my script is causing you trouble, please get in touch and let me
+know how I can do things better for you.

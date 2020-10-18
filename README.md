@@ -1,5 +1,7 @@
 # MSOA-level COVID-19 case count time series data
 
+**This readme is out of date. I'll update it soon. `data/observations.csv` is the best place for data right now.**
+
 These data are weekly totals for new COVID-19 cases published daily for England by MSOA ([Middle Level Super Output
 Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_Geography)).
 

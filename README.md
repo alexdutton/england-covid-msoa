@@ -5,6 +5,10 @@ Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_G
 
 Data in this repository start from the 2–8 October period.
 
+These data were originally pulled from the ArcGIS API, but from the 16th October are now pulled from
+the endpoint used by the [new interactive
+map](https://coronavirus-staging.data.gov.uk/details/interactive-map).
+
 ## Why?
 
 I couldn't find historical granular data anywhere, and wanted to be able to track numbers in my local area.
@@ -23,7 +27,8 @@ including the day in the field name. i.e. `wk41_3` covers the period from 1 Octo
 
 Note that the publication date is currently about four days behind the data. Use the field date, not the file date.
 
-These files are kept in order to reconstruct other data files if later required.
+These files are kept in order to reconstruct other data files if later required. They are no longer created as the
+data is no longer maintained in the ArcGIS API.
 
 ### data/{date}.csv
 
@@ -42,5 +47,9 @@ geometries from elsewhere (e.g. from [MapIt](https://mapit.mysociety.org/areas/O
 
 ## Updating
 
-These data are currently fetched, committed and pushed manually, The script for fetching new data is `main.py`.
-Data updates generally happen late afternoon.
+These data are currently fetched, committed and pushed manually, The script for
+fetching new data is `main.py`.  Data updates generally happen late afternoon.
+
+I'm doing it manually so I can check that things are working properly each
+time, as I fully expect to have not anticipated some aspect of the data or API,
+or for the API to change from under me at some point.

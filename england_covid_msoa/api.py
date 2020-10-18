@@ -28,7 +28,7 @@ def get_data_for_msoa(msoa):
     )
     response = urllib.request.urlopen(request)
     if response.status == 204:
-        return NO_CONTENT
+        return []
     if response.status != 200:
         sys.stderr.write(f"GET {url}\n\n")
         sys.stderr.write(f"{response.status} {response.msg}\n")
@@ -39,14 +39,29 @@ def get_data_for_msoa(msoa):
 
     release_date = dateutil.parser.parse(data["release"]).replace(microsecond=0)
 
+    latest_cases = data["latest"]["newCasesBySpecimenDate"]
+    new_cases = data["newCasesBySpecimenDate"]
+
+    if isinstance(latest_cases, list):
+        # E02004185, unlike every other, somehow has this as an array. idk why.
+        assert len(latest_cases) == 1
+        latest_cases = latest_cases[0]
+
+    if latest_cases["date"] != new_cases[0]["date"]:
+        data["newCasesBySpecimenDate"].insert(0, latest_cases)
+
     return [
         {
             "msoa": msoa,
             "source": "api",
             "specimenDate": datum["date"],
             "observationDate": release_date.isoformat(),
-            "fetchDate": datetime.datetime.now().isoformat(),
-            "rollingSum": datum["rollingSum"],
+            "fetchDate": datetime.datetime.now(datetime.timezone.utc)
+            .replace(microsecond=0)
+            .isoformat(),
+            "rollingSum": ""
+            if (rolling_sum := datum["rollingSum"]) == "0-2"
+            else str(rolling_sum),
         }
         for datum in data["newCasesBySpecimenDate"]
     ]

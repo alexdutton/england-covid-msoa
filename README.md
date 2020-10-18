@@ -38,6 +38,9 @@ The same data as above as a CSV table.
 
 This file mirrors the form of the individual-date files, with a new column added for each new day's data.
 
+Some of the values contain 'NO_CONTENT', because the API returns `204 No
+Content` for that MSOA, and I don't know why, beyond that they've previously had 0–2 cases in each rolling period. 
+
 ### data/geometries.json
 
 The geometry data pulled from the ArcGIS API. These are all rough polygons, and probably not in a standard format.

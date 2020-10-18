@@ -13,7 +13,7 @@ import urllib.request
 with open("email.txt") as f:
     email = f.read().split()
 
-ua = f"england-covid-msoa (https://github.com/alexsdutton/england-covid-msoa; {email})"
+ua = f"england-covid-msoa (https://github.com/alexsdutton/england-covid-msoa#if-you-run-this-api; {email})"
 
 
 def get_data_for_msoa(msoa):

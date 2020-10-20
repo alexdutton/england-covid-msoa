@@ -66,7 +66,13 @@ else:
                 rows, itemgetter("specimenDate", "observationDate")
             ):
                 sub_rows = sorted(sub_rows, key=itemgetter("fetchDate"))
-                writer.writerow(sub_rows[-1])
+                if len(set(row["rollingSum"] for row in sub_rows)) == 1:
+                    # If the value hasn't changed, use the oldest fetch date
+                    # so that the data stays stable
+                    writer.writerow(sub_rows[0])
+                else:
+                    # Otherwise, use the newest, as the data has been updated.
+                    writer.writerow(sub_rows[-1])
 
     csvsort.csvsort(observations_fn, [0, 2, 3])
 

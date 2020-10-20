@@ -1,7 +1,5 @@
 # MSOA-level COVID-19 case count time series data
 
-**This readme is out of date. I'll update it soon. `data/observations.csv` is the best place for data right now.**
-
 These data are weekly totals for new COVID-19 cases published daily for England by MSOA ([Middle Level Super Output
 Area](https://en.wikipedia.org/wiki/ONS_coding_system#Neighbourhood_Statistics_Geography)).
 
@@ -13,12 +11,34 @@ map](https://coronavirus-staging.data.gov.uk/details/interactive-map).
 
 ## Why?
 
-I couldn't find historical granular data anywhere, and wanted to be able to track numbers in my local area.
+I originally couldn't find historical granular data anywhere, and wanted to be able to track numbers in my local area.
+
+I've now found that PHE/NHSX [publish historical weekly data](https://coronavirus-staging.data.gov.uk/details/about-data#downloads)
+but this is still not the entire dataset. That data has one value per week, whereas this is collecting daily rolling
+sums for week-long periods. This data will also track revisions to previously-released data.
 
 
 ## Data files
 
 The `data/` directory contains:
+
+### data/observations.csv
+
+A CSV file of all MSOA-level data points with the following columns:
+
+* `msoa` — The MSOA code
+* `source` — Either `arcgis` or `api`, corresponding to which API the data was pulled from. `arcgis` is from when the
+  data were published in an ArcGIS dashboard, and `api` from when the cases map was moved to
+  [coronavirus.data.gov.uk](https://coronavirus-staging.data.gov.uk/details/interactive-map).
+* `specimenDate` — The end date of the period for which tests are counted in this observation.
+* `observationDate` — The date reported by the API for when the tests were counted. It's possible to have multiple rows
+  for a given specimen date and different observation dates if test results for the same day are reported at different
+  times.
+* `fetchDate` — When the data were fetched from the API
+* `rollingSum` — The number of positive tests for this MSOA in the 7 day period up to and including the `specimenDate`.
+  i.e. if `specimenDate` is `2020-10-20`, then the rolling sum covers the period from the 14th to the 20th of October.
+ 
+
 
 ### data/{date}.json
 
@@ -36,13 +56,6 @@ data is no longer maintained in the ArcGIS API.
 
 The same data as above as a CSV table.
 
-### data/combined.csv
-
-This file mirrors the form of the individual-date files, with a new column added for each new day's data.
-
-Some of the values contain 'NO_CONTENT', because the API returns `204 No
-Content` for that MSOA, and I don't know why, beyond that they've previously had 0–2 cases in each rolling period. 
-
 ### data/geometries.json
 
 The geometry data pulled from the ArcGIS API. These are all rough polygons, and probably not in a standard format.
@@ -52,8 +65,8 @@ geometries from elsewhere (e.g. from [MapIt](https://mapit.mysociety.org/areas/O
 
 ## Updating
 
-These data are currently fetched, committed and pushed manually, The script for
-fetching new data is `main.py`.  Data updates generally happen late afternoon.
+These data are currently fetched, committed and pushed manually, The module for fetching new data is
+`england_covid_msoa.update_observations_from_api`.  Data updates generally happen late afternoon.
 
 I'm doing it manually so I can check that things are working properly each
 time, as I fully expect to have not anticipated some aspect of the data or API,
@@ -62,8 +75,8 @@ or for the API to change from under me at some point.
 
 ## If you run this API
 
-I couldn't see how to get batch data out of any API on
-api.coronavirus.data.gov.uk at the MSOA level, so I've resorted to making a
+I couldn't see how to get batch data out of any API or download on
+api.coronavirus.data.gov.uk at the MSOA level for individual days, so I've resorted to making a
 request for every single MSOA, with a 0.2s hard-coded interval between
 requests. If my script is causing you trouble, please get in touch and let me
 know how I can do things better for you.

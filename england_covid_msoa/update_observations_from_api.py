@@ -59,20 +59,14 @@ else:
         writer = csv.DictWriter(observations_new_f, reader.fieldnames)
         writer.writeheader()
 
-        print(reader.fieldnames)
-
         for msoa, rows in itertools.groupby(reader, itemgetter("msoa")):
-            for group, sub_rows in itertools.groupby(
-                rows, itemgetter("specimenDate", "observationDate")
+            for _, sub_rows in itertools.groupby(
+                rows, itemgetter("specimenDate")
             ):
-                sub_rows = sorted(sub_rows, key=itemgetter("fetchDate"))
-                if len(set(row["rollingSum"] for row in sub_rows)) == 1:
-                    # If the value hasn't changed, use the oldest fetch date
-                    # so that the data stays stable
-                    writer.writerow(sub_rows[0])
-                else:
-                    # Otherwise, use the newest, as the data has been updated.
-                    writer.writerow(sub_rows[-1])
+                sub_rows = sorted(sub_rows, key=itemgetter("observationDate", "fetchDate"))
+                for _, sub_sub_rows in itertools.groupby(sub_rows, itemgetter("rollingSum")):
+                    sub_sub_rows = list(sub_sub_rows)
+                    writer.writerow(sub_sub_rows[0])
 
     csvsort.csvsort(observations_fn, [0, 2, 3])
 

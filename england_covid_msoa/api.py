@@ -1,8 +1,10 @@
 import datetime
+import time
 
 import dateutil.parser
 import json
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -26,7 +28,15 @@ def get_data_for_msoa(msoa):
             "X-Clacks-Overhead": "GNU Terry Pratchett",
         },
     )
-    response = urllib.request.urlopen(request)
+    try:
+        response = urllib.request.urlopen(request)
+    except urllib.error.HTTPError as e:
+        if e.headers.get('Retry-After'):
+            print(f"Sleeping for {e.headers['Retry-After']} seconds")
+            time.sleep(int(e.headers['Retry-After']) + 1)
+            response = urllib.request.urlopen(request)
+        else:
+            response = e
     if response.status == 204:
         return []
     if response.status != 200:

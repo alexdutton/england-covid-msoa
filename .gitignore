@@ -1,0 +1,4 @@
+*.pyc
+data/observations-by-date.csv
+email.txt
+.idea/

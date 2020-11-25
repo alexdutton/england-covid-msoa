@@ -51,5 +51,5 @@ with open('data/observations-by-date.csv') as f, open('data/latest.csv', 'w') as
 with open('data/totals.csv', 'w') as f:
     writer = csv.DictWriter(f, fieldnames=['date', 'rollingSum'])
     writer.writeheader()
-    for date in sorted(totals):
+    for date in specimen_dates:
         writer.writerow({'date': date, 'rollingSum': totals[date]})

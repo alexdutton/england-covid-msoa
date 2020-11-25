@@ -20,6 +20,11 @@ sums for week-long periods. This data will also track revisions to previously-re
 
 ## Data files
 
+Some days are currently missing data as I forgot to run my scripts on those
+dates. These should be obvious from missing entries in `data/observations.csv`.
+These data are expected to be filled in on subsequent weekiversaries (i.e. when
+fetching 7, 14, 21, etc days later).
+
 The `data/` directory contains:
 
 ### data/observations.csv
@@ -37,7 +42,22 @@ A CSV file of all MSOA-level data points with the following columns:
 * `fetchDate` — When the data were fetched from the API
 * `rollingSum` — The number of positive tests for this MSOA in the 7 day period up to and including the `specimenDate`.
   i.e. if `specimenDate` is `2020-10-20`, then the rolling sum covers the period from the 14th to the 20th of October.
+
+
+### data/latest.csv
+
+This file contains the latest data for each MSOA and specimen date in an
+enormous table, with MSOAs on the x axis, and specimen dates on the y axis. The
+cell values are again the 7-day rolling sums. You could open this in your
+favourite spreadsheet program, select the first column and the columns for the
+MSOAs your interested in, and create a graph of the rolling sums over time.
  
+Be warned that this has ~6700 columns.
+
+
+### data/totals.csv
+
+The total 7-day rolling sum for each day across England.
 
 
 ### data/{date}.json

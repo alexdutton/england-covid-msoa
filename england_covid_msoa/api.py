@@ -70,7 +70,7 @@ def get_data_for_msoa(msoa):
             .replace(microsecond=0)
             .isoformat(),
             "rollingSum": ""
-            if (rolling_sum := datum["rollingSum"]) == "0-2"
+            if (rolling_sum := datum["rollingSum"]) in ("0-2", None)
             else str(rolling_sum),
         }
         for datum in data["newCasesBySpecimenDate"]
